@@ -83,6 +83,12 @@
   .consent { display: flex; gap: .6rem; align-items: flex-start; font-size: .875rem; line-height: 1.45; margin-top: 1rem; opacity: .85; }
   .consent input { margin-top: .25rem; accent-color: var(--kunyit); width: 1rem; height: 1rem; flex: none; }
   .hp { position: absolute; left: -9999px; }
+  .signup .status { margin: 1rem 0 0; font-size: 1rem; opacity: 1; min-height: 1.5em; }
+  .signup .status:empty { display: none; }
+  .signup .status[data-state="ok"] { color: var(--kunyit); font-family: var(--display); font-weight: 700; font-stretch: 110%; }
+  .signup .status[data-state="error"] { border-left: 3px solid var(--kunyit); padding-left: .75rem; }
+  .signup.sent .field, .signup.sent .consent { display: none; }
+  .field button[disabled] { opacity: .6; cursor: progress; }
 
   /* Sections */
   section { padding: clamp(4rem, 9vw, 7rem) 0; }
@@ -167,26 +173,22 @@
       <div class="hero-grid">
         <p class="mission">We make space for music, art and culture that mainstream institutions rarely teach, so it can be celebrated, shared and passed on.</p>
 
-        <!--
-          BREVO: in Brevo go to Contacts > Forms, open your subscription form,
-          copy its embed code, and paste the form's action URL below.
-          It looks like https://xxxx.sibforms.com/serve/XXXXXXXX
-          Field names (EMAIL, OPT_IN, email_address_check, locale) match Brevo's defaults.
-        -->
-        <form class="signup" id="join" method="POST" action="BREVO_FORM_ACTION_URL" target="_blank">
+        <!-- Brevo sign-up form. Sends to Brevo in the background so people stay on the page. -->
+        <form class="signup" id="join" method="POST" action="https://c7c10746.sibforms.com/serve/MUIFAEmEviJwwH-H0-vWOIKyDlceI-uWJ64ctwg3o_s7Vxw8tzsKS0UkydduEm9ETtiuKX8zCF9hLbx9YyTZeGiKQDzt3aPQ5cmx6rKbKL9-WZKjvVCaq6ja49NYwal74P5u4Ze7xZF9_CX51dQ2Ou9xG5vO5cLUjVz71DBT_1hkvWysEPYaUu3qawas61htKMHMzZgUocfo0Y9uYA==" target="_blank" novalidate>
           <h2>Hear about the next one</h2>
           <p>Event announcements and early tickets. A few emails a year, nothing more.</p>
           <div class="field">
             <label for="email" class="hp">Email address</label>
-            <input id="email" type="email" name="EMAIL" placeholder="you@email.com" autocomplete="email" required>
+            <input id="email" type="email" name="EMAIL" placeholder="you@email.com" autocomplete="email" required aria-describedby="signup-status">
             <button type="submit">Sign up</button>
           </div>
           <label class="consent">
-            <input type="checkbox" name="OPT_IN" value="1" required>
+            <input type="checkbox" id="consent" required>
             <span>I'd like emails from The Untaught. I can unsubscribe any time.</span>
           </label>
           <input class="hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="hidden" name="locale" value="en">
+          <p class="status" id="signup-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -256,6 +258,41 @@
 </footer>
 
 <script>
+  // Sign-up: post to Brevo in the background and show the result inline.
+  (function () {
+    var form = document.getElementById('join');
+    if (!form || !window.fetch) return;
+    var email = form.querySelector('#email');
+    var consent = form.querySelector('#consent');
+    var button = form.querySelector('button');
+    var status = form.querySelector('.status');
+    function say(msg, state) { status.textContent = msg; status.dataset.state = state || ''; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!email.value || !email.checkValidity()) { say('Enter an email address like name@example.com.', 'error'); email.focus(); return; }
+      if (!consent.checked) { say('Tick the box so we know you want emails from us.', 'error'); consent.focus(); return; }
+
+      button.disabled = true; button.textContent = 'Signing up';
+      say('');
+      var url = form.action + (form.action.indexOf('?') > -1 ? '&' : '?') + 'isAjax=1';
+      fetch(url, { method: 'POST', body: new FormData(form) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.success) {
+            form.classList.add('sent');
+            say("You're on the list. Check your inbox, there might be a confirmation email waiting.", 'ok');
+          } else {
+            throw new Error('rejected');
+          }
+        })
+        .catch(function () {
+          say("We couldn't sign you up just now. Check your email address and try again, or email hello@theuntaught.org.", 'error');
+        })
+        .finally(function () { button.disabled = false; button.textContent = 'Sign up'; });
+    });
+  })();
+
   // Draw the wandering path once, then settle it into a dotted trail.
   (function () {
     var svg = document.querySelector('.path');
