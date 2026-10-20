@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Untaught</title>
+<meta name="description" content="The Untaught creates spaces for underrepresented voices in music, art and culture. Home of Jalan Jalan, a night of Indonesian and Southeast Asian culture in London.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap" rel="stylesheet">
+<style>
+  /* Placeholder tokens. Swap these when the design system lands. */
+  :root {
+    --tarum: #1E2B5E;   /* indigo, the batik dye */
+    --kunyit: #F2B705;  /* turmeric */
+    --daun: #2F6B4F;    /* leaf */
+    --kapur: #F3F4EE;   /* chalk paper */
+    --tarum-soft: #3A4780;
+    --display: "Anybody", system-ui, sans-serif;
+    --body: "Literata", Georgia, serif;
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --max: 72rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--kapur);
+    color: var(--tarum);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--kunyit); outline-offset: 3px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Header */
+  .top { background: var(--tarum); color: var(--kapur); }
+  .top .wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-top: 1.25rem; padding-bottom: 1rem; flex-wrap: wrap; }
+  .mark { font-family: var(--display); font-weight: 800; font-stretch: 120%; text-decoration: none; font-size: 1.05rem; }
+  .top nav { display: flex; gap: 1.5rem; font-family: var(--display); font-stretch: 90%; font-size: 1rem; }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero { background: var(--tarum); color: var(--kapur); position: relative; overflow: hidden; padding: 2rem 0 5rem; }
+  .path { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .path path { fill: none; stroke: var(--kunyit); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 14; }
+  .hero .wrap { position: relative; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-stretch: 125%;
+    font-size: clamp(2.75rem, 10vw, 9rem);
+    line-height: .92;
+    letter-spacing: -.015em;
+    margin: 0 0 2.5rem;
+    padding-bottom: .08em;
+  }
+  .hero h1 span { display: block; font-stretch: 60%; font-weight: 500; font-size: .42em; letter-spacing: 0; margin-bottom: .1em; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: end; }
+  .mission { font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.45; max-width: 32ch; margin: 0; }
+
+  /* Sign-up form */
+  .signup h2 { font-family: var(--display); font-stretch: 110%; font-weight: 700; font-size: 1.35rem; margin: 0 0 .35rem; }
+  .signup p { margin: 0 0 1rem; font-size: 1rem; opacity: .85; }
+  .field { display: flex; border-bottom: 3px solid var(--kunyit); }
+  .field input {
+    flex: 1; min-width: 0; background: transparent; border: 0; color: var(--kapur);
+    font: inherit; font-size: 1.1rem; padding: .7rem 0;
+  }
+  .field input::placeholder { color: var(--kapur); opacity: .55; }
+  .field input:focus-visible { outline: none; }
+  .field:focus-within { border-bottom-color: var(--kapur); }
+  .field button {
+    background: var(--kunyit); color: var(--tarum); border: 0; cursor: pointer;
+    font-family: var(--display); font-weight: 800; font-stretch: 110%; font-size: 1rem;
+    padding: .7rem 1.2rem; margin-bottom: -3px;
+  }
+  .field button:hover { background: var(--kapur); }
+  .consent { display: flex; gap: .6rem; align-items: flex-start; font-size: .875rem; line-height: 1.45; margin-top: 1rem; opacity: .85; }
+  .consent input { margin-top: .25rem; accent-color: var(--kunyit); width: 1rem; height: 1rem; flex: none; }
+  .hp { position: absolute; left: -9999px; }
+
+  /* Sections */
+  section { padding: clamp(4rem, 9vw, 7rem) 0; }
+  .split { display: grid; grid-template-columns: 14rem 1fr; gap: clamp(1.5rem, 5vw, 4rem); }
+  .split > h2 {
+    font-family: var(--display); font-weight: 900; font-stretch: 130%;
+    font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1; margin: 0;
+  }
+  .lede { font-size: clamp(1.3rem, 2.4vw, 1.75rem); line-height: 1.4; margin: 0 0 2rem; max-width: 34ch; }
+  .prose { max-width: 62ch; }
+  .prose p { margin: 0 0 1.25rem; }
+  h3 { font-family: var(--display); font-stretch: 110%; font-weight: 700; font-size: 1.25rem; margin: 3rem 0 1rem; }
+
+  .doing { list-style: none; padding: 0; margin: 0; columns: 2 18rem; column-gap: 3rem; }
+  .doing li { break-inside: avoid; padding: .7rem 0 .7rem 1.6rem; border-top: 1px solid rgba(30,43,94,.18); position: relative; }
+  .doing li::before { content: ""; position: absolute; left: 0; top: 1.25rem; width: .6rem; height: .6rem; background: var(--daun); }
+
+  /* Jalan Jalan */
+  .jj { background: var(--daun); color: var(--kapur); }
+  .jj .split > h2 { font-stretch: 80%; font-size: clamp(2.5rem, 5vw, 3.5rem); }
+  .jj .lede { max-width: 38ch; }
+  .event {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+    background: var(--kunyit); color: var(--tarum); padding: clamp(1.5rem, 4vw, 2.5rem); margin-top: 1rem;
+  }
+  .date { font-family: var(--display); font-weight: 900; font-stretch: 140%; line-height: .9; font-size: clamp(3rem, 7vw, 5rem); margin: 0; }
+  .date small { display: block; font-size: .32em; font-weight: 600; font-stretch: 100%; margin-top: .35em; }
+  .event h3 { margin: 0 0 .5rem; font-size: 1.5rem; }
+  .event p { margin: 0 0 1rem; max-width: 46ch; }
+  .facts { margin: 0 0 1.25rem; display: grid; gap: .35rem; font-size: 1rem; }
+  .facts div { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; }
+  .facts dt { font-family: var(--display); font-weight: 700; font-stretch: 90%; }
+  .facts dd { margin: 0; }
+  .btn {
+    display: inline-block; background: var(--tarum); color: var(--kapur); text-decoration: none;
+    font-family: var(--display); font-weight: 800; font-stretch: 110%; padding: .7rem 1.2rem; margin-top: .5rem;
+  }
+  .btn:hover { background: var(--tarum-soft); }
+  .jj .after { margin-top: 2.5rem; max-width: 60ch; }
+
+  /* Footer */
+  footer { background: var(--tarum); color: var(--kapur); padding: 3rem 0; font-size: 1rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; }
+  footer p { margin: 0; }
+  footer .mark { font-size: 1.4rem; }
+
+  @media (max-width: 760px) {
+    .hero-grid, .split { grid-template-columns: 1fr; }
+    .event { grid-template-columns: 1fr; }
+    .top nav { gap: 1rem; }
+  }
+
+  /* The one moving moment: the path draws itself once on load */
+  @media (prefers-reduced-motion: no-preference) {
+    .path path { stroke-dasharray: none; stroke-dashoffset: 0; }
+    .path.drawing path { animation: walk 3.2s ease-out forwards; }
+    @keyframes walk { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+    .path.done path { stroke-dasharray: 1 14; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#">The Untaught</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#jalan-jalan">Jalan Jalan</a>
+      <a href="#join">Join the list</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <svg class="path" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-20 120 C 180 60, 260 220, 420 180 S 640 40, 760 140 S 900 330, 1040 260 S 1160 330, 1230 400"/>
+    </svg>
+    <div class="wrap">
+      <h1><span>Welcome to</span>The Untaught</h1>
+      <div class="hero-grid">
+        <p class="mission">We make space for music, art and culture that mainstream institutions rarely teach, so it can be celebrated, shared and passed on.</p>
+
+        <!--
+          BREVO: in Brevo go to Contacts > Forms, open your subscription form,
+          copy its embed code, and paste the form's action URL below.
+          It looks like https://xxxx.sibforms.com/serve/XXXXXXXX
+          Field names (EMAIL, OPT_IN, email_address_check, locale) match Brevo's defaults.
+        -->
+        <form class="signup" id="join" method="POST" action="BREVO_FORM_ACTION_URL" target="_blank">
+          <h2>Hear about the next one</h2>
+          <p>Event announcements and early tickets. A few emails a year, nothing more.</p>
+          <div class="field">
+            <label for="email" class="hp">Email address</label>
+            <input id="email" type="email" name="EMAIL" placeholder="you@email.com" autocomplete="email" required>
+            <button type="submit">Sign up</button>
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="OPT_IN" value="1" required>
+            <span>I'd like emails from The Untaught. I can unsubscribe any time.</span>
+          </label>
+          <input class="hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="locale" value="en">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap split">
+      <h2>About</h2>
+      <div>
+        <p class="lede">The Untaught is a not-for-profit (soon to be a community interest company) for people whose cultures don't often get a stage in UK music and arts.</p>
+        <div class="prose">
+          <p>That includes diaspora and global majority communities, LGBTQ+ people, and everyone who comes along to listen, dance, eat and take part.</p>
+          <p>We're starting close to home, with Indonesian and Southeast Asian diaspora culture in London and around. Over time we want to open the doors to more communities.</p>
+        </div>
+
+        <h3>What we do (and will do)</h3>
+        <ul class="doing">
+          <li>Events mixing old and new: gamelan, dance, live music, DJs and markets</li>
+          <li>Exhibitions, film screenings, talks and workshops</li>
+          <li>Paid work for underrepresented artists, and space for small food and craft traders</li>
+          <li>Fundraising for our communities, here and back home, with tickets kept affordable</li>
+        </ul>
+
+        <h3>Why it matters</h3>
+        <div class="prose">
+          <p>More visibility for cultures and artists that rarely make it onto mainstream stages, and real, paid opportunities for the people behind them. Welcoming spaces where you can reconnect with your heritage, meet others, and feel a bit less alone. Traditions shared with new audiences, and practical support when our communities are hit by crises like the Kalimantan fires.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jj" id="jalan-jalan">
+    <div class="wrap split">
+      <h2>Jalan Jalan</h2>
+      <div>
+        <p class="lede">In Indonesian, jalan jalan means going out for a wander. Ours is a night of Indonesian and Southeast Asian culture in London: gamelan and dance, DJs, food, and a market full of small traders.</p>
+
+        <article class="event" aria-labelledby="jj2">
+          <p class="date">5 Dec<small>Saturday</small></p>
+          <div>
+            <h3 id="jj2">Jalan Jalan #2</h3>
+            <p>Our second one is a fundraiser for grassroots groups responding to the fires in Kalimantan. Snacks and a vendor market, traditional dance, live gamelan, and a talk on Kalimantan's forests with a conservation author. From 9pm the DJs take over with Indonesian pop, disco, dangdut and breaks.</p>
+            <dl class="facts">
+              <div><dt>Where</dt><dd>Nico's Bar, Hackney Bridge, E15</dd></div>
+              <div><dt>When</dt><dd>3pm till 1am</dd></div>
+              <div><dt>DJs</dt><dd>TIRTA, VEYRA, delirious.blanc and more</dd></div>
+              <div><dt>Entry</dt><dd>Free, pay what you can on the night. 18+</dd></div>
+            </dl>
+            <a class="btn" href="https://ra.co/events/2565625" target="_blank" rel="noopener">Get a free ticket on RA</a>
+          </div>
+        </article>
+
+        <p class="after">Jalan Jalan #1 kicked things off, and we're only getting started. Want to perform, trade, or help out at a future one? Drop us a line at <a href="mailto:hello@theuntaught.org">hello@theuntaught.org</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="mark" href="#">The Untaught</a>
+    <div>
+      <p><a href="mailto:hello@theuntaught.org">hello@theuntaught.org</a></p>
+      <p>CIC registration in progress.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Draw the wandering path once, then settle it into a dotted trail.
+  (function () {
+    var svg = document.querySelector('.path');
+    var p = svg && svg.querySelector('path');
+    if (!p || !window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+    var len = p.getTotalLength();
+    p.style.setProperty('--len', len);
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    requestAnimationFrame(function () { svg.classList.add('drawing'); });
+    p.addEventListener('animationend', function () {
+      p.style.strokeDasharray = '';
+      p.style.strokeDashoffset = '';
+      svg.classList.remove('drawing');
+      svg.classList.add('done');
+    });
+  })();
+</script>
+</body>
+</html>
